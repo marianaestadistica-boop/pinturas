@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<!-- Tienda generada con Harvys, asistente de e-commerce creado por el Profesor Harvey Sanabria -->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pinturas R &amp; R — [POR COMPLETAR]</title>
+<meta name="description" content="Comercialización de pinturas y revestimientos para interiores y exteriores: vinilos, Aquamur Premium, estuco acrílico y Graniplast, para clientes residenciales y comerciales.">
+<meta name="generator" content="Harvys — asistente de e-commerce del Profesor Harvey Sanabria">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="anim-alta tarj-elevadas modo-claro">
+
+<!-- MODAL PAGO -->
+<div class="modal-overlay" id="modal-pago" onclick="modalClickFuera(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-head"><h3>Confirmar pago</h3><button class="modal-cerrar" onclick="cerrarModal()" aria-label="Cerrar">✕</button></div>
+    <div class="modal-body">
+      <div class="modal-total"><span class="tl">Total a pagar</span><span class="tm" id="modal-total-monto">$0</span></div>
+      <div class="pago-metodos" id="pago-metodos"></div>
+      <div class="pago-datos" id="pago-datos">
+        <div class="pd-label">Transferir a este número</div>
+        <div class="pd-numero" id="pd-numero"></div>
+        <div class="pd-nombre" id="pd-nombre"></div>
+        <button class="btn-copiar" onclick="copiarNumero()">📋 Copiar número</button>
+      </div>
+      <div class="pasos">
+        <div class="paso"><div class="paso-num">1</div><div class="paso-txt" id="paso-1"></div></div>
+        <div class="paso"><div class="paso-num">2</div><div class="paso-txt">Toca <strong>"Confirmar y enviar"</strong> — se abre WhatsApp con tu pedido</div></div>
+        <div class="paso"><div class="paso-num">3</div><div class="paso-txt" id="paso-3"></div></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <a href="#" target="_blank" rel="noopener" class="btn-wsp" onclick="return prepararWsp(this)">✅ Confirmar y enviar por WhatsApp</a>
+      <button class="btn-seguir" onclick="cerrarModal()">← Seguir comprando</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay" onclick="cerrarCarrito()"></div>
+
+<!-- VISOR DE FOTOS -->
+<div class="visor" id="visor" role="dialog" aria-modal="true" aria-label="Foto del producto">
+  <figure class="visor-caja">
+    <button class="visor-cerrar" aria-label="Cerrar">✕</button>
+    <div class="visor-foto" id="visor-foto"><img id="visor-img" alt=""></div>
+    <figcaption><strong id="visor-nombre"></strong><span id="visor-precio"></span></figcaption>
+    <div class="visor-ayuda">Toca o haz clic en la foto para ampliarla más</div>
+  </figure>
+</div>
+
+<button class="carrito-fab" onclick="toggleCarrito()" id="fab" aria-label="Abrir carrito">🛒<span class="carrito-badge" id="badge">0</span></button>
+
+<div class="carrito-panel" id="panel-carrito">
+  <div class="panel-header"><h3>Tu pedido de pinturas y acabados</h3><button class="btn-cerrar" onclick="cerrarCarrito()" aria-label="Cerrar carrito">✕</button></div>
+  <ul id="lista-carrito"></ul>
+  <div class="panel-footer">
+    <div class="total-row"><span class="total-lbl">Total</span><span class="total-monto" id="total">$0</span></div>
+    <div class="panel-btns"><button class="btn-vaciar" onclick="vaciarCarrito()">Vaciar</button><button class="btn-pagar" onclick="pagar()">Consultar por WhatsApp</button></div>
+  </div>
+</div>
+
+<!-- ASISTENTE DE LA TIENDA (responde con los datos de esta tienda) -->
+<span class="as-aviso" id="as-aviso">¿Te ayudo? 👋</span>
+<button class="as-burbuja" id="as-burbuja" aria-label="Abrir el asistente de la tienda"><svg class="as-robot" viewBox="0 0 64 64" aria-hidden="true">
+      <line x1="32" y1="5" x2="32" y2="14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <circle class="as-antena" cx="32" cy="5" r="4" fill="currentColor"/>
+      <rect x="4" y="27" width="6" height="12" rx="3" fill="currentColor"/>
+      <rect x="54" y="27" width="6" height="12" rx="3" fill="currentColor"/>
+      <rect x="10" y="14" width="44" height="38" rx="15" fill="currentColor"/>
+      <rect x="16" y="21" width="32" height="20" rx="10" fill="var(--as-cara)"/>
+      <circle class="as-ojo" cx="25" cy="31" r="4" fill="currentColor"/>
+      <circle class="as-ojo" cx="39" cy="31" r="4" fill="currentColor"/>
+      <path d="M26 45q6 4 12 0" stroke="var(--as-cara)" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg></button>
+<div class="as-panel" id="as-panel" role="dialog" aria-label="Reni">
+  <div class="as-cabecera">
+    <div class="as-avatar"><svg class="as-robot" viewBox="0 0 64 64" aria-hidden="true">
+      <line x1="32" y1="5" x2="32" y2="14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <circle class="as-antena" cx="32" cy="5" r="4" fill="currentColor"/>
+      <rect x="4" y="27" width="6" height="12" rx="3" fill="currentColor"/>
+      <rect x="54" y="27" width="6" height="12" rx="3" fill="currentColor"/>
+      <rect x="10" y="14" width="44" height="38" rx="15" fill="currentColor"/>
+      <rect x="16" y="21" width="32" height="20" rx="10" fill="var(--as-cara)"/>
+      <circle class="as-ojo" cx="25" cy="31" r="4" fill="currentColor"/>
+      <circle class="as-ojo" cx="39" cy="31" r="4" fill="currentColor"/>
+      <path d="M26 45q6 4 12 0" stroke="var(--as-cara)" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg></div>
+    <div><strong>Reni</strong><small><i></i> En línea</small></div>
+    <button id="as-cerrar" aria-label="Cerrar el asistente">✕</button>
+  </div>
+  <div class="as-mensajes" id="as-mensajes"></div>
+  <div class="as-chips" id="as-chips"></div>
+  <form class="as-form" id="as-form">
+    <input id="as-input" placeholder="Escribe tu pregunta…" autocomplete="off" aria-label="Tu pregunta">
+    <button type="submit" aria-label="Enviar"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></button>
+  </form>
+</div>
+
+<header class="hero hero-centrado">
+  <div class="hero-bg efecto-puntos"></div>
+  <div class="hero-content">
+    <div>
+      
+      <div class="hero-badge">Pinturas y revestimientos · Villavicencio</div>
+      <h1>Pinturas R &amp; R<span>Interiores y exteriores</span></h1>
+      <p class="hero-sub">Pinturas, revestimientos y accesorios para tu próximo proyecto. Explora precios por presentación y coordina tu pedido con atención directa por WhatsApp.</p>
+      <a href="#catalogo" class="btn-hero">Explorar productos
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <div class="hero-stats"><div class="hero-stat"><div class="num">6</div><div class="lbl">Líneas de productos</div></div><div class="hero-stat"><div class="num">Local</div><div class="lbl">Entregas en Villavicencio</div></div><div class="hero-stat"><div class="num">WhatsApp</div><div class="lbl">Atención directa</div></div></div>
+    </div>
+    </div>
+  <div class="hero-scroll"><div></div></div>
+</header>
+
+<section class="banner-sec">
+  <div class="banner-glow"></div>
+  <div class="banner-content">
+    <div class="sec-label">Acabados para tus espacios</div>
+    <h2>Pinturas y revestimientos <em>en un solo lugar</em></h2>
+    <p>Vinilos Tipo 1 y Tipo 2, Aquamur Premium, estuco acrílico, Graniplast y brochas. Elige tu presentación y coordina la entrega o el retiro presencial por WhatsApp.</p>
+    <div class="banner-chips"><span class="chip">Atención por WhatsApp</span><span class="chip">Retiro presencial</span><span class="chip">Villavicencio y sectores de Bogotá</span><span class="chip">Contraentrega desde $500.000</span></div>
+  </div>
+</section>
+<section class="seccion-personalizada" id="custom-datos-pendientes">
+<section style="background:var(--bg2);color:var(--tx);padding:24px;border-radius:var(--r);border:1px solid var(--p);margin:24px auto;max-width:1100px"><p class="sec-label">Información para tu pedido</p><h2 class="sec-title">Elige tu presentación y coordina la entrega</h2><p>Cada presentación tiene su propio precio en pesos colombianos y se agrega por separado al carrito. Las fotografías identifican la línea del producto; confirma el envase, color y capacidad exacta con el negocio. La capacidad de las presentaciones indicadas como «medio» está por confirmar.</p><p>Villavicencio: el mismo día o hasta 1–2 días hábiles. Sectores de Bogotá: 3–5 días hábiles. Consulta cobertura y costo del domicilio por WhatsApp. Retiro presencial disponible previa coordinación.</p><p>Contraentrega desde $500.000 en las zonas indicadas, sin recargo por esta modalidad. Nequi: 3112413851 · Llave: @rolando2798 · Titular: Rolando Acosta. Los horarios están pendientes de confirmación. Este es un prototipo académico.</p></section>
+</section>
+
+<div class="filtros-wrap" id="filtros-bar">
+  <div class="busqueda-wrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg>
+    <input type="text" id="buscador" placeholder="Buscar producto..." oninput="filtrarBusqueda()">
+  </div>
+</div>
+<section class="catalogo-wrap" id="catalogo">
+  <div class="catalogo-header">
+    <div><div class="sec-label">Explora nuestras líneas</div><div class="sec-title">Pinturas y acabados</div></div>
+    <div class="catalogo-count" id="cont-count"></div>
+  </div>
+  <div id="productos"></div>
+</section>
+
+<section class="beneficios-sec" id="beneficios">
+  <div class="sec-centro"><div class="sec-label">Compra con atención directa</div><div class="sec-title">¿Por qué Pinturas R &amp; R?</div></div>
+  <div class="beneficios-grid">
+    <div class="bcard"><div class="bcard-icono">🎨</div><h3>Variedad de líneas</h3><p>Vinilos, Aquamur Premium, estuco acrílico y Graniplast para diferentes proyectos de interiores, exteriores y acabados.</p></div><div class="bcard"><div class="bcard-icono">💬</div><h3>Atención directa</h3><p>Resuelve tus dudas sobre productos, precios y entregas mediante WhatsApp Business.</p></div><div class="bcard"><div class="bcard-icono">🚚</div><h3>Entregas coordinadas</h3><p>Domicilios en Villavicencio y sectores de Bogotá. Contraentrega desde $500.000 en las zonas indicadas, sin costo adicional por esta modalidad.</p></div><div class="bcard"><div class="bcard-icono">📍</div><h3>Retiro presencial</h3><p>Realiza tu consulta por WhatsApp y coordina el retiro de tus productos en el negocio.</p></div>
+  </div>
+</section>
+
+<section class="recs-sec">
+  <div class="sec-label">Explora el catálogo</div>
+  <div class="sec-title">Líneas para tu próximo proyecto</div>
+  <div class="recs-grid" id="recomendados"></div>
+</section>
+
+<section class="top-sec">
+  <div class="sec-label">Favoritos de los visitantes</div>
+  <div class="sec-title">Los acabados más votados</div>
+  <div class="top-grid" id="top"></div>
+</section>
+
+<section class="duelo-sec">
+  <div class="sec-label">Tu opinión cuenta</div>
+  <div class="sec-title">¿Qué producto prefieres?</div>
+  <div class="duelo-arena" id="duelo"></div>
+  <p class="duelo-info">Elige tu favorito para ayudar a ordenar el ranking. Los votos no representan ventas ni recomendaciones técnicas.</p>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-marca"><h3>Pinturas R &amp; R</h3><p>Pinturas y revestimientos para interiores y exteriores en Villavicencio. Entregas en sectores de Bogotá y retiro presencial coordinado por WhatsApp.</p></div>
+    <div class="footer-col"><h4>Contacto</h4><ul><li><a href="https://wa.me/573112413851" target="_blank" rel="noopener">WhatsApp: +57 3112413851</a></li><li>📍 Villavicencio, Meta</li></ul></div>
+    <div class="footer-col"><h4>Pagos</h4><ul><li>Efectivo</li><li>Nequi</li><li>Daviplata</li><li>Transferencia bancaria</li><li>Contraentrega</li></ul></div>
+    <div class="footer-col"><h4>Categorías</h4><ul><li>Vinilos</li><li>Aquamur Premium</li><li>Estuco acrílico</li><li>Graniplast</li><li>Accesorios para pintar</li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Pinturas R &amp; R — Todos los derechos reservados</span>
+    <span>Prototipo académico · Confirma disponibilidad y entrega con el negocio</span>
+  </div>
+  <div class="footer-credito">
+    Creada con <strong>Harvys</strong> · Prof. Harvey Sanabria ·
+    <a href="https://wa.me/573103323843?text=Hola%20Profesor%20Harvey%2C%20vi%20una%20tienda%20creada%20con%20Harvys%20y%20quiero%20m%C3%A1s%20informaci%C3%B3n." target="_blank" rel="noopener">WhatsApp 310 332 3843</a>
+  </div>
+</footer>
+
+<!-- Copia del proyecto para volver a abrirlo en Harvys (botón "Abrir"). No la borres. -->
+<script type="application/json" id="harvys-proyecto">{"negocio":{"nombre":"Pinturas R & R","descripcion":"Comercialización de pinturas y revestimientos para interiores y exteriores: vinilos, Aquamur Premium, estuco acrílico y Graniplast, para clientes residenciales y comerciales.","eslogan":"[POR COMPLETAR]","ciudad":"Villavicencio, Meta","cobertura":"Entregas en Villavicencio: Viscaya, Cerro Campestre, Cairo, Cenacap, Llano Hermoso, Esperanza, Barú y Buque; también en sectores de Bogotá por confirmar. Villavicencio: el mismo día o hasta 1–2 días hábiles. Bogotá: 3–5 días hábiles. Retiro presencial disponible, coordinado por WhatsApp. Contraentrega desde $500.000 en todo Villavicencio y zonas aledañas al centro de Bogotá, sin recargo. Confirmar cobertura exacta por WhatsApp antes de pedir.","whatsapp":"573112413851","instagram":"","facebook":"","tiktok":"","horarios":[],"logo":""},"tema":{"nombreEstilo":"Color en acción","modo":"claro","colores":{"primario":"#B52430","textoSobrePrimario":"#FFFFFF","fondo":"#FFFCF5","fondoAlterno":"#FFF1D6","tarjeta":"#FFFFFF","texto":"#282536","textoSuave":"#635367","acento":"#224EAF"},"fuentes":{"titulos":"Oswald","cuerpo":"Poppins"},"titulosMayusculas":true,"radio":24,"animaciones":"alta","fondoEfecto":"puntos","hero":"centrado","tarjetas":"elevadas"},"textos":{"heroEtiqueta":"Pinturas y revestimientos · Villavicencio","heroTitulo":"Pinturas R & R","heroTituloResaltado":"Interiores y exteriores","heroSubtitulo":"Pinturas, revestimientos y accesorios para tu próximo proyecto. Explora precios por presentación y coordina tu pedido con atención directa por WhatsApp.","heroBoton":"Explorar productos","heroImagen":"","estadisticas":[{"valor":"6","etiqueta":"Líneas de productos"},{"valor":"Local","etiqueta":"Entregas en Villavicencio"},{"valor":"WhatsApp","etiqueta":"Atención directa"}],"bannerEtiqueta":"Acabados para tus espacios","bannerTitulo":"Pinturas y revestimientos","bannerTituloResaltado":"en un solo lugar","bannerTexto":"Vinilos Tipo 1 y Tipo 2, Aquamur Premium, estuco acrílico, Graniplast y brochas. Elige tu presentación y coordina la entrega o el retiro presencial por WhatsApp.","chips":["Atención por WhatsApp","Retiro presencial","Villavicencio y sectores de Bogotá","Contraentrega desde $500.000"],"catalogoEtiqueta":"Explora nuestras líneas","catalogoTitulo":"Pinturas y acabados","botonAgregar":"+ Agregar al carrito","beneficiosEtiqueta":"Compra con atención directa","beneficiosTitulo":"¿Por qué Pinturas R & R?","recomendadosEtiqueta":"Explora el catálogo","recomendadosTitulo":"Líneas para tu próximo proyecto","topEtiqueta":"Favoritos de los visitantes","topTitulo":"Los acabados más votados","dueloEtiqueta":"Tu opinión cuenta","dueloTitulo":"¿Qué producto prefieres?","dueloInfo":"Elige tu favorito para ayudar a ordenar el ranking. Los votos no representan ventas ni recomendaciones técnicas.","testimoniosEtiqueta":"Experiencias reales","testimoniosTitulo":"Opiniones de nuestros clientes","horariosEtiqueta":"Atención del negocio","horariosTitulo":"Horarios de Pinturas R & R","footerTexto":"Pinturas y revestimientos para interiores y exteriores en Villavicencio. Entregas en sectores de Bogotá y retiro presencial coordinado por WhatsApp.","footerFrase":"Prototipo académico · Confirma disponibilidad y entrega con el negocio","carritoTitulo":"Tu pedido de pinturas y acabados","botonPagar":"Consultar por WhatsApp"},"productos":[{"id":"vinilo-tipo-1","nombre":"Vinilo Tipo 1 · Galón","precio":58000,"categoria":"Vinilos","imagen":"foto:ut9p0t","descripcion":"Vinilo Tipo 1. Presentación: galón. Consulta colores y aplicación recomendada por WhatsApp.","opciones":null,"destacado":false},{"id":"vinilo-tipo-1-balde","nombre":"Vinilo Tipo 1 · Balde","precio":113000,"categoria":"Vinilos","imagen":"foto:ut9p0t","descripcion":"Vinilo Tipo 1. Presentación: balde. Consulta colores y aplicación recomendada por WhatsApp.","opciones":null,"destacado":false},{"id":"vinilo-tipo-1-cunete","nombre":"Vinilo Tipo 1 · Cuñete","precio":220000,"categoria":"Vinilos","imagen":"foto:ut9p0t","descripcion":"Vinilo Tipo 1. Presentación: cuñete. Consulta colores y aplicación recomendada por WhatsApp.","opciones":null,"destacado":false},{"id":"vinilo-tipo-2","nombre":"Vinilo Tipo 2 · Galón","precio":45000,"categoria":"Vinilos","imagen":"foto:zo1cak","descripcion":"Vinilo Tipo 2. Presentación: galón. Consulta colores y aplicación recomendada por WhatsApp.","opciones":null,"destacado":false},{"id":"vinilo-tipo-2-balde","nombre":"Vinilo Tipo 2 · Balde","precio":88000,"categoria":"Vinilos","imagen":"foto:zo1cak","descripcion":"Vinilo Tipo 2. Presentación: balde. Consulta colores y aplicación recomendada por WhatsApp.","opciones":null,"destacado":false},{"id":"vinilo-tipo-2-cunete","nombre":"Vinilo Tipo 2 · Cuñete","precio":160000,"categoria":"Vinilos","imagen":"foto:zo1cak","descripcion":"Vinilo Tipo 2. Presentación: cuñete. Consulta colores y aplicación recomendada por WhatsApp.","opciones":null,"destacado":false},{"id":"aquamur-premium","nombre":"Aquamur Premium · Galón","precio":85000,"categoria":"Aquamur Premium","imagen":"foto:8tmqvk","descripcion":"Aquamur Premium. Presentación: galón. Consulta tonos y características con el negocio.","opciones":null,"destacado":false},{"id":"aquamur-premium-balde","nombre":"Aquamur Premium · Balde","precio":175000,"categoria":"Aquamur Premium","imagen":"foto:8tmqvk","descripcion":"Aquamur Premium. Presentación: balde. Consulta tonos y características con el negocio.","opciones":null,"destacado":false},{"id":"aquamur-premium-cunete","nombre":"Aquamur Premium · Cuñete","precio":320000,"categoria":"Aquamur Premium","imagen":"foto:8tmqvk","descripcion":"Aquamur Premium. Presentación: cuñete. Consulta tonos y características con el negocio.","opciones":null,"destacado":false},{"id":"estuco-acrilico","nombre":"Estuco acrílico · Galón","precio":23000,"categoria":"Estuco acrílico","imagen":"foto:crj6tc","descripcion":"Estuco acrílico. Presentación: galón. Consulta características y modo de aplicación por WhatsApp.","opciones":null,"destacado":false},{"id":"estuco-acrilico-medio","nombre":"Estuco acrílico · Medio","precio":34000,"categoria":"Estuco acrílico","imagen":"foto:crj6tc","descripcion":"Presentación indicada como «medio» en la entrevista. Capacidad exacta: [POR COMPLETAR]. Consulta características y aplicación por WhatsApp.","opciones":null,"destacado":false},{"id":"estuco-acrilico-cunete","nombre":"Estuco acrílico · Cuñete","precio":60000,"categoria":"Estuco acrílico","imagen":"foto:crj6tc","descripcion":"Estuco acrílico. Presentación: cuñete. Consulta características y modo de aplicación por WhatsApp.","opciones":null,"destacado":false},{"id":"graniplast","nombre":"Graniplast · Galón","precio":30000,"categoria":"Graniplast","imagen":"foto:x8kxfj","descripcion":"Revestimiento Graniplast. Presentación: galón. Consulta acabados y aplicación con el negocio.","opciones":null,"destacado":false},{"id":"graniplast-medio","nombre":"Graniplast · Medio","precio":48000,"categoria":"Graniplast","imagen":"foto:x8kxfj","descripcion":"Presentación indicada como «medio» en la entrevista. Capacidad exacta: [POR COMPLETAR]. Consulta acabados y aplicación por WhatsApp.","opciones":null,"destacado":false},{"id":"graniplast-cunete","nombre":"Graniplast · Cuñete","precio":87000,"categoria":"Graniplast","imagen":"foto:x8kxfj","descripcion":"Revestimiento Graniplast. Presentación: cuñete. Consulta acabados y aplicación con el negocio.","opciones":null,"destacado":false},{"id":"linea-por-confirmar","nombre":"Brocha","precio":25000,"categoria":"Accesorios para pintar","imagen":"foto:580x2t","descripcion":"Brocha fotografiada en el negocio. Precio por unidad: $25.000 COP. Medida y material: [POR COMPLETAR].","opciones":null,"destacado":false}],"beneficios":[{"icono":"🎨","titulo":"Variedad de líneas","texto":"Vinilos, Aquamur Premium, estuco acrílico y Graniplast para diferentes proyectos de interiores, exteriores y acabados."},{"icono":"💬","titulo":"Atención directa","texto":"Resuelve tus dudas sobre productos, precios y entregas mediante WhatsApp Business."},{"icono":"🚚","titulo":"Entregas coordinadas","texto":"Domicilios en Villavicencio y sectores de Bogotá. Contraentrega desde $500.000 en las zonas indicadas, sin costo adicional por esta modalidad."},{"icono":"📍","titulo":"Retiro presencial","texto":"Realiza tu consulta por WhatsApp y coordina el retiro de tus productos en el negocio."}],"testimonios":[],"pagos":{"metodos":[{"nombre":"Efectivo","icono":"💵","tipo":"contraentrega"},{"nombre":"Nequi","icono":"💜","tipo":"transferencia"},{"nombre":"Daviplata","icono":"🔴","tipo":"transferencia"},{"nombre":"Transferencia bancaria","icono":"🏦","tipo":"transferencia"},{"nombre":"Contraentrega","icono":"📦","tipo":"contraentrega"}],"numeroTransferencia":"Nequi: 3112413851 · Llave: @rolando2798","titular":"Rolando Acosta","contraentregaDetalle":"Disponible desde $500.000 COP en todo Villavicencio y zonas aledañas al centro de Bogotá; confirmar dirección por WhatsApp. Sin recargo por contraentrega. Pago en efectivo, transferencia bancaria, Nequi o Daviplata al propietario o personal autorizado. Nequi: 3112413851. Llave: @rolando2798. Titular: Rolando Acosta. Confirmar los datos de otros medios con el negocio."},"backend":{"url":"https://script.google.com/macros/s/AKfycbw1RsKfZSdRHVULdd2vooQ4IoyshqBEuJUaX7oizcgzRGzjAe80fYa_3vhSBQ6pjVH4/exec"},"asistente":{"activo":true,"nombre":"Reni","saludo":"¡Hola! Soy Reni, el asistente de Pinturas R & R. Te ayudo a consultar productos, precios por presentación, pagos y entregas. Los horarios están por confirmar."},"secciones":["banner","custom:datos-pendientes","catalogo","beneficios","recomendados","top","duelo"],"personalizado":{"css":"","secciones":[{"id":"datos-pendientes","html":"\u003csection style=\"background:var(--bg2);color:var(--tx);padding:24px;border-radius:var(--r);border:1px solid var(--p);margin:24px auto;max-width:1100px\">\u003cp class=\"sec-label\">Información para tu pedido\u003c/p>\u003ch2 class=\"sec-title\">Elige tu presentación y coordina la entrega\u003c/h2>\u003cp>Cada presentación tiene su propio precio en pesos colombianos y se agrega por separado al carrito. Las fotografías identifican la línea del producto; confirma el envase, color y capacidad exacta con el negocio. La capacidad de las presentaciones indicadas como «medio» está por confirmar.\u003c/p>\u003cp>Villavicencio: el mismo día o hasta 1–2 días hábiles. Sectores de Bogotá: 3–5 días hábiles. Consulta cobertura y costo del domicilio por WhatsApp. Retiro presencial disponible previa coordinación.\u003c/p>\u003cp>Contraentrega desde $500.000 en las zonas indicadas, sin recargo por esta modalidad. Nequi: 3112413851 · Llave: @rolando2798 · Titular: Rolando Acosta. Los horarios están pendientes de confirmación. Este es un prototipo académico.\u003c/p>\u003c/section>"}]}}</script>
+<script type="application/json" id="harvys-rutas">{"vinilo-tipo-1":"img/vinilo-tipo-1-ut9p0t.jpg","vinilo-tipo-1-balde":"img/vinilo-tipo-1-ut9p0t.jpg","vinilo-tipo-1-cunete":"img/vinilo-tipo-1-ut9p0t.jpg","vinilo-tipo-2":"img/vinilo-tipo-2-zo1cak.jpg","vinilo-tipo-2-balde":"img/vinilo-tipo-2-zo1cak.jpg","vinilo-tipo-2-cunete":"img/vinilo-tipo-2-zo1cak.jpg","aquamur-premium":"img/aquamur-8tmqvk.jpg","aquamur-premium-balde":"img/aquamur-8tmqvk.jpg","aquamur-premium-cunete":"img/aquamur-8tmqvk.jpg","estuco-acrilico":"img/estuco-crj6tc.jpg","estuco-acrilico-medio":"img/estuco-crj6tc.jpg","estuco-acrilico-cunete":"img/estuco-crj6tc.jpg","graniplast":"img/graniplast-x8kxfj.jpg","graniplast-medio":"img/graniplast-x8kxfj.jpg","graniplast-cunete":"img/graniplast-x8kxfj.jpg","linea-por-confirmar":"img/brocha-580x2t.jpg"}</script>
+<script src="script.js"></script>
+</body>
+</html>
